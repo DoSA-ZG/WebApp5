@@ -1,0 +1,139 @@
+﻿ @model RPPP_WebApp.ViewModels.MDSuradniciViewModel
+@{
+    ViewBag.Title = "Suradnik br. " + @Model.suradnik.IdSuradnik;
+}
+
+<div class="container">
+    <div class="row text-center">
+        <div class="col-sm-2">
+            @if (Model.IdPrethSuradnik != -1)
+            {
+                <a class="btn btn-sm btn-primary"
+                   asp-action="Show"
+                   asp-route-page="@ViewBag.Page"
+                   asp-route-sort="@ViewBag.Sort"
+                   asp-route-ascending="@ViewBag.Ascending"
+                   asp-route-id="@Model.IdPrethSuradnik">
+                    <i class="fas fa-step-backward">prethodni</i>
+                </a>
+            }
+        </div>
+        <div class="col-sm-8">
+            <h4>
+                ID: @Model.suradnik.IdSuradnik
+            </h4>
+
+            <h5 class="boksic">
+                <div class="col-sm-2">
+                    Ime i prezime:  @Model.suradnik.Ime @Model.suradnik.Prezime
+                </div>
+                <div class="col-sm-2">
+                    Oib:  @Model.suradnik.Oib
+                </div>
+                <div class="col-sm-4">
+                    Email: @Model.suradnik.Mail
+                </div>
+                <div class="col-sm-2">
+                    Mobitel: @Model.suradnik.Mobitel
+                </div>
+                <div class="col-sm-2">
+                    Stranka: @Model.suradnik.Stranka
+                </div>
+                <div class="col-sm-2">
+                    Kvalifikacija: @Model.kvalifikacija
+                </div>
+            </h5>
+        </div>
+        <div class="col-sm-2">
+            @if (Model.IdSljedSuradnik != -1)
+            {
+                <a class="btn btn-sm btn-primary" asp-action="Show"
+                   asp-route-page="@ViewBag.Page"
+                   asp-route-sort="@ViewBag.Sort"
+                   asp-route-ascending="@ViewBag.Ascending"
+                   asp-route-id="@Model.IdSljedSuradnik">
+                    <i class="fas fa-step-forward">sljedeci</i>
+                </a>
+            }
+        </div>
+    </div>
+
+    <div class="row justify-content-sm-center">
+        <div class="col-sm-1 text-right">
+            <a asp-action="Update"
+               asp-route-id="@Model.suradnik.IdSuradnik"
+               asp-route-page="@ViewBag.CurrentPage"
+               asp-route-sort="@ViewBag.Sort"
+               asp-route-ascending="@ViewBag.Ascending"
+               class="btn btn-sm btn-warning" title="Ažuriraj"><i class="fas fa-edit"></i>Uredi</a>
+        </div> 
+        <div class="col-sm-1 text-right">
+        <form asp-action="Delete" method="post"
+              asp-route-id="@Model.suradnik.IdSuradnik"
+              asp-route-page="@ViewBag.CurrentPage"
+              asp-route-sort="@ViewBag.Sort"
+              asp-route-ascending="@ViewBag.Ascending">
+            <input type="hidden" name="IdSuradnik" value="@Model.suradnik.IdSuradnik" />
+            <button type="submit" class="btn btn-sm btn-danger delete" title="Obriši"><i class="fas fa-trash-alt">Obriši</i></button>
+        </form>
+    </div>
+    <div class="col-sm-1 text-left">
+            <a class="btn btn-sm btn-primary cancel"
+               asp-action="Index"
+               asp-route-page="@ViewBag.Page"
+               asp-route-sort="@ViewBag.Sort"
+               asp-route-ascending="@ViewBag.Ascending"
+               title="Povratak na popis suradnika">
+                <i class="fas fa-undo-alt">povratak</i>
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="text-center col-sm-1">
+                        ID Posao
+                    </th>
+                    <th class ="text-center col-sm-4">
+                        Opis posla
+                    </th>
+                    <th class="text-center col-sm-4">
+                        Predvideno vrijeme trajanja u danima
+                    </th>
+                    <th class="text-center col-sm-2">
+                        Uloga
+                    </th>
+                    <th >
+                        Vrsta Posla
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var posao in Model.Poslovi)
+                {
+                    <tr>
+                        <td class="text-center col-sm-1">
+                            @posao.IdPosao
+                        </td>
+                        <td class="text-center col-sm-4">
+                            @posao.Opis
+                        </td>
+                        <td class="text-center col-sm-4">
+                            @posao.PredVrTrajanjaDani
+                        </td>
+                        <td class="text-center col-sm-2">
+                            @posao.Uloga
+                        </td>
+                        <td class="text-center">
+                            @posao.NazivPosao
+                        </td>
+                        
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div> 
